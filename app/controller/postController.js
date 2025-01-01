@@ -49,7 +49,15 @@ exports.getById = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     const term = req.query.term
-    const data = await Post.getAll()
+    const page = parseInt(req.query.page, 10) || 1; // Current page (default: 1)
+    const limit = parseInt(req.query.limit, 10) || 10; // Items per page (default: 10)
+    const offset = (page - 1) * limit;
+    
+    const data = await Post.getAll(limit, offset)
+    // const [data, total] = await Promise.all([
+    //     await Post.getAll(limit, offset),
+    //     await Post.getCount()
+    // ])
 
     if (!term) {
         res.status(200).send(data) // if no search term is provided return all the posts

@@ -60,9 +60,9 @@ class Post {
         }
     }
 
-    static async getAll() {
+    static async getAll( limit, offset) {
         try {
-            const data = await db.query('SELECT * FROM posts;')
+            const data = await db.query('SELECT * FROM posts LIMIT ? OFFSET ?', [limit, offset])
             return data[0]
         } catch (error) {
             console.error('Error fetching all posts:', error)

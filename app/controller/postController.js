@@ -15,7 +15,7 @@ exports.create = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const {postID} = req.params;
+    const {postID} = req.params || {};
     const { title, content, category, tags } = req.body;
 
     if (!title || !content || !category || !tags) {
